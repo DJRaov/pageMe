@@ -83,7 +83,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [680, 20.0]
+    coordinate: [672, 92.0]
     rotation: 0
     state: true
 - name: band_pass_filter_0_0
@@ -108,8 +108,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1216, 44.0]
-    rotation: 0
+    coordinate: [504, 252.0]
+    rotation: 180
     state: true
 - name: blocks_char_to_float_0
   id: blocks_char_to_float
@@ -143,8 +143,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [864, 96.0]
-    rotation: 0
+    coordinate: [864.0, 216]
+    rotation: 270
     state: true
 - name: mixalot_flexencode_0
   id: mixalot_flexencode
@@ -198,8 +198,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1040, 80.0]
-    rotation: 0
+    coordinate: [696, 288.0]
+    rotation: 180
     state: true
 - name: soapy_hackrf_sink_0
   id: soapy_hackrf_sink
@@ -218,7 +218,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1440, 184.0]
+    coordinate: [512, 440.0]
     rotation: 0
     state: true
 
@@ -230,6 +230,7 @@ connections:
 - [blocks_multiply_const_vxx_0, '0', rational_resampler_xxx_0, '0']
 - [mixalot_flexencode_0, '0', blocks_char_to_float_0, '0']
 - [mixalot_flexencode_0, beeps_output, network_socket_pdu_0, pdus]
+- [mixalot_flexencode_0, cmds_out, soapy_hackrf_sink_0, cmd]
 - [network_socket_pdu_0, pdus, mixalot_flexencode_0, beeps]
 - [rational_resampler_xxx_0, '0', band_pass_filter_0_0, '0']
 
