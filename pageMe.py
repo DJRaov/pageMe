@@ -20,8 +20,12 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or("&"), description=description, intents=intents)
 
-capcode = '0123456' #6- and 7-digit capcodes are supported (no leading zeros)
+
+capcode = 123456 #6- and 7-digit capcodes are supported (no leading zeros)
 admin_userid = add_your_own
+
+freq = 159.2
+mode = 'pocsag1200'
 
 sock.connect(server_address)
 
@@ -36,9 +40,16 @@ async def on_ready():
 async def page(inter, msg: str):
     await inter.response.send_message("Paging...") #Send confirmation that we received the message
     msg_page = (f'{inter.author.name}#{inter.author.discriminator}\n{msg}') #The message to be paged
-    pdu = (f'pocsag1200 0 159200000 alpha {capcode} {msg_page.encode("ascii").hex()}') #PDU for gr-mixalot (it suckysucky)
-    print (f'{msg_page} \n \n  GRC PDU: {pdu} \n -------------- \n') #Print the debug info (message and PDU)
+    pdu = (f'{mode} 0 {freq*1000000} alpha {capcode} {msg_page.encode("ascii").hex()}') #PDU for gr-mixalot (it suckysucky)
+    print (f'{msg_page}\n\nGRC PDU: {pdu}\n--------------\n') #Print the debug info (message and PDU)
     sock.sendall(bytes(pdu, encoding='ascii')) #Shove it all down the TCPipe
+
+@bot.slash_command(description="Configure the bot and other stuff")
+async def config(inter, freq: float, mode: str, ):
+    if (inter.author.id == admin_userid):
+        await inter.response.send_message(f"New frequency: {freq}MHz, new mode: {mode}")
+    else:
+        await inter.response.send_message("You do not have the rights to configure the bot.")
 
 @bot.slash_command(description="Shut the bot down")
 async def shutdown(inter):
@@ -48,5 +59,7 @@ async def shutdown(inter):
         sock.shutdown(1)
         sock.close()
         sys.exit()
+    else:
+        await inter.response.send_message("You do not have the rights to shut the bot down.")
 
 bot.run(TOKEN)
