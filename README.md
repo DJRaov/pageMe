@@ -3,10 +3,14 @@
 A very simple Discord to POCSAG/FLEX bridge written in Python with RF side made in GNURadio.
 
 ## Prerequisities
-#### Libraries
+#### Programs
 ```
 GNURadio
 gr-mixalot
+soapySDR
+```
+#### Python libraries
+```
 disnake
 ```
 
